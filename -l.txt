@@ -1,0 +1,15 @@
+Description Quantity | Unit price Amount
+
+RX REV CODE: IP=0.258,0P=0636 (220596) 1 $32.00 $32.00
+
+‘OXYGEN DAILY SUPPLY (300001) 1 $754.00 $754.00
+
+Pathology examination of body issue (88305) 1 $288.00 $288.00
+
+Colonoscopy with polyp removal (45385) 1 $5,883.00 $5,883.00
+
+Colonoscopy with biopsy (45380) 1 $5,883.00 $5,883.00
+Total
+
+912,840.00
+
