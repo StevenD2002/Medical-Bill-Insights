@@ -1,5 +1,10 @@
 module github.com/StevenD2002/Medical-Bill-Insights
 
-go 1.21.6
+go 1.22
 
-require github.com/a-h/templ v0.2.648 // indirect
+toolchain go1.22.2
+
+require (
+	github.com/a-h/templ v0.2.648 // indirect
+	github.com/lib/pq v1.10.9 // indirect
+)
