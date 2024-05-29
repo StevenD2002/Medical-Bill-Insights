@@ -7,7 +7,7 @@ import (
 )
 
 type ProcedureRepository interface {
-	GetProcedureByCode(code string) (*models.Procedure, error)
+	GetProcedurePricesByCode(code string) (*models.Procedure, error)
 }
 
 type procedureRepo struct {
@@ -18,12 +18,13 @@ func NewProcedureRepository(db *sql.DB) ProcedureRepository {
 	return &procedureRepo{db: db}
 }
 
-func (r *procedureRepo) GetProcedureByCode(code string) (*models.Procedure, error) {
+func (r *procedureRepo) GetProcedurePricesByCode(code string) (*models.Procedure, error) {
 	// implementation
-	// query all items in the code table that have the same code inputted
 	var procedure models.Procedure
 
-	query := `SELECT billing_code, billing_code_type FROM code WHERE billing_code = $1`
+	query := `SELECT c.billing_code AS billing_code, r.* FROM code as c  
+
+  INNER JOIN rate AS r ON c.id = r.code_id WHERE c.billing_code = $1;`
 	// cast types to string before assigning to the procedure struct
 	err := r.db.QueryRow(query, code).Scan(&procedure.Code, &procedure.BillingCodeType)
 	if err != nil {

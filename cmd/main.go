@@ -4,22 +4,34 @@ import (
 	"database/sql"
 	"fmt"
 	"log"
+	"os"
+	"strconv"
 
 	"github.com/StevenD2002/Medical-Bill-Insights/internal/db/repository"
+	"github.com/joho/godotenv"
 	_ "github.com/lib/pq"
 )
 
-const (
-	host     = "localhost"
-	port     = 5432
-	user     = "prisma"
-	dbname   = "prisma"
-	password = "prisma"
-)
-
 func main() {
+	// load the .env file
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatal("Error loading .env file")
+	}
+
+	host := os.Getenv("HOST")
+	port := os.Getenv("PORT")
+	portInt, err := strconv.Atoi(port)
+	if err != nil {
+		log.Fatal("Error converting port to int")
+	}
+
+	user := os.Getenv("DBUSER")
+	dbname := os.Getenv("DBNAME")
+	password := os.Getenv("DBPASSWORD")
+
 	psqlInfo := fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable",
-		host, port, user, password, dbname)
+		host, portInt, user, password, dbname)
 	db, err := sql.Open("postgres", psqlInfo)
 	if err != nil {
 		log.Fatal(err)
@@ -30,7 +42,7 @@ func main() {
 	procedureRepo := repository.NewProcedureRepository(db)
 
 	// use the repository to get a procedure by code
-	procedure, err := procedureRepo.GetProcedureByCode("19120")
+	procedure, err := procedureRepo.GetProcedurePricesByCode("99203")
 
 	if err == nil {
 		fmt.Println(procedure.Code)
