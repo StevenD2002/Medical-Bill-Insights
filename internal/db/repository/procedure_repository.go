@@ -22,7 +22,7 @@ func (r *procedureRepo) GetProcedurePricesByCode(code string) (*models.Procedure
 	// implementation
 	var procedure models.Procedure
 
-	query := `SELECT c.billing_code AS billing_code, r.* FROM code as c  
+	query := `SELECT c.billing_code AS billing_code, r.negotiated_rate AS negotiated_rate, r.rate_metadata_id AS rate_metadata_id FROM code as c  
 
   INNER JOIN rate AS r ON c.id = r.code_id WHERE c.billing_code = $1;`
 	// cast types to string before assigning to the procedure struct
